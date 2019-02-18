@@ -9,51 +9,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="script.js"></script>
-    <title>realisateur</title>
+    <title><?php echo $_GET['name']; ?></title>
 </head>
-<body>  
+<body>
     <?php
-        require 'connect.php' ;
-        include 'navbar.php';
+            require 'connect.php' ;
+            include 'navbar.php';
 
-        $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
-        $db_name = "cinefa";
-        $db_found = mysqli_select_db($db_handle, $db_name);
-        mysqli_set_charset($db_handle, "utf8");
+            $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
+            $db_name = "cinefa";
+            $db_found = mysqli_select_db($db_handle, $db_name);
+            mysqli_set_charset($db_handle, "utf8");
+            if($db_found && isset($_GET['id']))
+                {
+                    $sql_query = 'SELECT * FROM ACTORS WHERE id_actor ="'.  $_GET['id'] .'"';
+                    $result_query = mysqli_query($db_handle, $sql_query);
+                    $db_field = mysqli_fetch_assoc($result_query);
 
-        if($db_found)
-        {
-            $sql_query = "SELECT * FROM DIRECTORS";
-            $result_query = mysqli_query($db_handle, $sql_query);
-
-            while($db_field = mysqli_fetch_assoc($result_query)) { 
-                        
-                        ?>
-                        <p>realisateur<p>
-                        <?php
                         echo "\n";
-                        echo $db_field['name_dir'];
+                        echo $db_field['name'];
                         echo "\n";
                         echo $db_field['gender'];
                         echo "\n";
                         echo $db_field['age'];
                         echo "\n";
-                        echo '<a href="fiche_real.php?id=' . $db_field['id_director'] .'&name= '. $db_field['name_dir'] .'">Dis-moi bonjour !</a>'
+
+                        $sql_query2 = 'SELECT * FROM PLAYS_IN INNER JOIN ACTORS ON ACTORS.id_actor = PLAYS_IN.id_actor INNER JOIN MOVIES ON PLAYS_IN.id_movie = MOVIES.id_movie  WHERE PLAYS_IN.id_actor = "'. $_GET['id'] . '" LIMIT 3';
+                        $result_query2 = mysqli_query($db_handle, $sql_query2);
+                        while($db_field2 = mysqli_fetch_assoc($result_query2)){
+                            echo $db_field2['title'];
+                            echo "\n";
+                        }
                         ?>
                        
                         <img src='<?php echo $db_field['liens'];?>'/>
                         <?php
-                        
-                        
-                        
-                    }  
-
-            }
-        else 
-            {
-                echo 'Erreur'; 
-            }
+                }
         ?>
-    
+
+    <h1>
 </body>
 </html>
