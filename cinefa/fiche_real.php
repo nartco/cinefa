@@ -39,10 +39,13 @@
                         while($db_field2 = mysqli_fetch_assoc($result_query2)){
                             echo $db_field2['title'];
                             echo "\n";
+                            ?>
+                        <img src='<?php echo $db_field2['liens_mov'];?>'/>
+                        <?php
                         }
                         ?>
                        
-                        <img src='<?php echo $db_field['liens'];?>'/>
+                        <img src='<?php echo $db_field['liens_dir'];?>'/>
                         <?php
                 }
         ?>

@@ -43,7 +43,7 @@
                         echo '<a href="fiche_actor.php?id=' . $db_field['id_actor'] .'&name= '. $db_field['name'] .'">Dis-moi bonjour !</a>'
                         ?>
                        
-                        <img src='<?php echo $db_field['liens'];?>'/>
+                        <img src='<?php echo $db_field['liens_act'];?>'/>
                         <?php
                         echo '</div>';
                         

@@ -38,9 +38,18 @@
                         echo "\n";
                         echo $db_field2['name'];
                         echo "\n";
+                        ?>
+                        <img src='<?php echo $db_field2['liens_act'];?>'/>
+                        <?php
+                        echo '<a href="fiche_actor.php?id=' . $db_field2['id_actor'] .'&name= '. $db_field2['name'] .'">Dis-moi bonjour !</a>'
+                        ?>
+                        <?php
                         echo $db_field2['name_dir'];
+                        ?>
+                        <img src='<?php echo $db_field2['liens_dir'];?>'/>
+                        <?php
                         ?>   
-                        <img src='<?php echo $db_field['liens'];?>'/>
+                        <img src='<?php echo $db_field['liens_mov'];?>'/>
                         <?php
 
                 }

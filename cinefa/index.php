@@ -14,10 +14,9 @@
     <title>home</title>
 </head>
 <body>
-    <?php
+<?php
         require 'connect.php' ;
         include 'navbar.php';
-
         $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
         $db_name = "cinefa";
         $db_found = mysqli_select_db($db_handle, $db_name);
@@ -26,7 +25,6 @@
             {
                 $sql_query = "SELECT * FROM MOVIES";
                 $result_query = mysqli_query($db_handle, $sql_query);
-
                 while($db_field = mysqli_fetch_assoc($result_query)) { 
                         ?>
                         <p>movie<p>
@@ -38,13 +36,12 @@
                         echo "\n";
                         echo '<a href="fiche_movie.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'">Dis-moi bonjour !</a>'
                         ?>
-                        <img src='<?php echo $db_field['liens'];?>'/>
+                        <img src='<?php echo $db_field['liens_mov'];?>'/>
                         <?php
                         
                         
                         
                     }  
-
             }
         else 
             {
@@ -53,8 +50,5 @@
             mysqli_close($db_handle) ;
         ?>
 
-
-        
-    
 </body>
 </html>

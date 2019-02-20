@@ -41,7 +41,7 @@
                         echo '<a href="fiche_real.php?id=' . $db_field['id_director'] .'&name= '. $db_field['name_dir'] .'">Dis-moi bonjour !</a>'
                         ?>
                        
-                        <img src='<?php echo $db_field['liens'];?>'/>
+                        <img src='<?php echo $db_field['liens_dir'];?>'/>
                         <?php
                         
                         
