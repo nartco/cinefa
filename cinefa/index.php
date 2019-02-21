@@ -21,7 +21,14 @@
         $db_name = "cinefa";
         $db_found = mysqli_select_db($db_handle, $db_name);
         mysqli_set_charset($db_handle, "utf8");
-        if($db_found)
+
+    ?>
+        <form action="index.php" id="searchthis" method="get">
+            <input id="search" name="q" type="text" placeholder="Rechercher" />
+            <input id="search-btn" type="submit" value="Rechercher" />
+        </form>
+    <?php
+        if($db_found  && (isset($_GET['q']) == false))
             {
                 $sql_query = "SELECT * FROM MOVIES";
                 $result_query = mysqli_query($db_handle, $sql_query);
@@ -43,6 +50,32 @@
                         
                     }  
             }
+            else if($db_found && (isset($_GET['q']))){
+                $search = $_GET['q'];
+                $result = 0;
+                $sql_query2 = "SELECT * FROM MOVIES  WHERE title LIKE '%{$search}%'";
+                $result_query2 = mysqli_query($db_handle, $sql_query2);
+
+                while($db_field2 = mysqli_fetch_assoc($result_query2)){
+                    ++$result;
+            ?>
+                    <p>realisateur<p>
+                    <?php
+                    echo "\n";
+                    echo $db_field2['title'];
+                    echo "\n";
+                    echo $db_field2['release_date'];
+                    echo "\n";
+                    echo '<a href="fiche_movie.php?id=' . $db_field2['id_movie'] .'&name= '. $db_field2['title'] .'">Dis-moi bonjour !</a>'
+                    ?>
+                   
+                    <img src='<?php echo $db_field2['liens_mov'];?>'/>
+                    <?php
+        }
+        if($result == 0){
+            echo "aucun résultat ne correspond à votre recherche";
+        }
+    }
         else 
             {
                 echo 'Erreur'; 

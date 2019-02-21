@@ -45,7 +45,7 @@ include 'nav.php';
         <div class="row">
           <!-- Single Event Area -->
           <?php
-require '../cinefa/connect.php' ;
+require '../connect.php' ;
 $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
 $db_name = "cinefa";
 $db_found = mysqli_select_db($db_handle, $db_name);
