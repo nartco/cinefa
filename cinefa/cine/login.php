@@ -59,8 +59,9 @@
         function verif($pseudo, $mdp, $db_handle, $db_name, $db_found){
 
             
-            $verif_sign = "SELECT * FROM USERS";
-            while($db_field = mysqli_fetch_assoc($verif_sign)){
+            $verif_query = "SELECT * FROM USERS";
+            $verif = mysqli_query($db_handle, $verif_query);
+            while($db_field = mysqli_fetch_assoc($verif)){
                 if($db_field['pseudo'] == $pseudo){
                     return false;
                 }

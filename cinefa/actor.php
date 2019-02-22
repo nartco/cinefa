@@ -28,7 +28,7 @@
     <?php
         if($db_found && (isset($_GET['q']) == false))
         {
-            $sql_query = "SELECT * FROM ACTORS";
+            $sql_query = 'SELECT * FROM ACTORS';
             $result_query = mysqli_query($db_handle, $sql_query);
 
             echo '<section class="wrapper">';
