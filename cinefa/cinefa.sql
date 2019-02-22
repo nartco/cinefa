@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 20 Février 2019 à 15:46
+-- Généré le :  Ven 22 Février 2019 à 16:30
 -- Version du serveur :  5.7.25-0ubuntu0.18.04.2
 -- Version de PHP :  7.2.15-0ubuntu0.18.04.1
 
@@ -85,7 +85,7 @@ CREATE TABLE `DIRECTORS` (
 --
 
 INSERT INTO `DIRECTORS` (`id_director`, `name_dir`, `gender`, `age`, `liens_dir`) VALUES
-(1, 'Alejandro González Iñárritu É ', 'H', 45, 'http://www.allocine.fr/personne/fichepersonne-35365/photos/detail/?cmediafile=21271330'),
+(1, 'Alejandro González Iñárritu É ', 'H', 45, 'http://fr.web.img3.acsta.net/r_1920_1080/pictures/16/01/19/12/52/369643.jpg'),
 (2, 'Damien Chazelle', 'H', 50, 'http://fr.web.img6.acsta.net/r_1920_1080/pictures/17/01/10/11/57/402621.jpg'),
 (3, 'Joe Dante', 'H', 30, 'http://fr.web.img6.acsta.net/r_1920_1080/pictures/14/08/14/17/53/195008.jpg'),
 (4, 'Steven Spielberg', 'H', 60, 'http://fr.web.img2.acsta.net/r_1920_1080/pictures/15/12/02/12/12/537392.jpg'),
@@ -167,15 +167,29 @@ CREATE TABLE `USERS` (
   `pseudo` varchar(255) NOT NULL,
   `mail` varchar(80) NOT NULL,
   `phone` int(16) NOT NULL,
-  `address` text NOT NULL
+  `address` text NOT NULL,
+  `mdp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `USERS`
 --
 
-INSERT INTO `USERS` (`ref_user`, `pseudo`, `mail`, `phone`, `address`) VALUES
-(1, 'nartco', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de stras');
+INSERT INTO `USERS` (`ref_user`, `pseudo`, `mail`, `phone`, `address`, `mdp`) VALUES
+(3, 'seb', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', '\'\''),
+(4, 'seb', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', '\'\''),
+(5, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(6, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(7, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(8, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(9, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(10, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(11, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(12, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(13, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(14, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(15, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root'),
+(16, 'jj', 'sebastien.thuillier@hotmail.com', 626018626, '159 avenue de strasbourg, batiment A2 porte nÂ°95', 'root');
 
 --
 -- Index pour les tables exportées
@@ -262,7 +276,7 @@ ALTER TABLE `MOVIES`
 -- AUTO_INCREMENT pour la table `USERS`
 --
 ALTER TABLE `USERS`
-  MODIFY `ref_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ref_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- Contraintes pour les tables exportées
 --
