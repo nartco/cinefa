@@ -10,7 +10,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title><?php echo $_GET['name']; ?></title>
+    <title>Merci mec</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -51,8 +51,12 @@
             $result_query2 = mysqli_query($db_handle, $sql_query2);
             $db_field2 = mysqli_fetch_assoc($result_query2);
 
+            $movie = $_GET['movie'];
+            $id_user = $_SESSION['id'];
+            $note = $_GET['id'];
+
             if($db_found){
-                $query = 'INSERT INTO `MOVIE_NOTES`(`id_movie`, `id_user`, `note`) VALUES ("'. $pseudo . '","'. $email .'","'. $tel .'", "'. $adresse .'", "'.$mdp .'")';
+                $query = 'INSERT INTO `MOVIE_NOTES`(`id_movie`, `id_user`, `note`) VALUES ("'. $movie . '","'. $id_user .'","'. $note .'")';
                 $send = mysqli_query($db_handle, $query);
             }
         }
