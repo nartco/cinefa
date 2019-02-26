@@ -15,8 +15,6 @@ if($db_found){
     $db_field = mysqli_fetch_assoc($user);
     
   }
-
-
 }
   
   ?>
@@ -56,7 +54,7 @@ include 'nav.php';
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url(img/bg-img/breadcumb3.jpg);">
       <div class="bradcumbContent">
-        <h2>Films
+        <h2>Acteurs
         </h2>
       </div>
     </section>
@@ -69,26 +67,24 @@ include 'nav.php';
           <?php
 if($db_found && (isset($_GET['q']) == false))
 {
-$sql_query = "SELECT * FROM MOVIES";
+$sql_query = "SELECT * FROM ACTORS";
 $result_query = mysqli_query($db_handle, $sql_query);
 while($db_field = mysqli_fetch_assoc($result_query)) { 
 
-  echo '<a href="fiche_film.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'"><div class="col-12 col-md-6 col-lg-4">'
+  echo '<a href="fiche_actor.php?id=' . $db_field['id_actor'] .'&name= '. $db_field['name'] .'"><div class="col-12 col-md-6 col-lg-4">'
   ?>
 
           
             <div class="single-event-area mb-30">
               <div class="event-thumbnail">
-                <img src='<?php echo $db_field['liens_mov']; ?>'/>
+                <img src='<?php echo $db_field['liens_act']; ?>'/>
               </div>
               <div class="event-text">
                 <h4>
-                  <?php echo $db_field['title']; ?>
+                  <?php echo $db_field['name']; ?>
                 </h4>
                 <div class="event-meta-data">
-                  <a href="#" class="event-place">
-                    <?php echo $db_field['release_date']; ?>
-                  </a>
+                 
                 </div>
                 <a href="#" class="btn see-more-btn">Voir plus
                 </a>
@@ -98,32 +94,29 @@ while($db_field = mysqli_fetch_assoc($result_query)) {
           <!--echo '<a href="fiche_movie.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'">Dis-moi bonjour !</a>' -->
           <?php
 }
-}  
-else if($db_found && (isset($_GET['q'])))
-{
+}
+else if($db_found && (isset($_GET['q']))){
   $search = $_GET['q'];
   $result = 0;
-  $sql_query2 = "SELECT * FROM MOVIES  WHERE title LIKE '%{$search}%'";
+  $sql_query2 = "SELECT * FROM ACTORS  WHERE `name` LIKE '%{$search}%'";
   $result_query2 = mysqli_query($db_handle, $sql_query2);
 
   while($db_field2 = mysqli_fetch_assoc($result_query2)){
       ++$result;
-      echo '<a href="fiche_film.php?id=' . $db_field2['id_movie'] .'&name= '. $db_field2['title'] .'"><div class="col-12 col-md-6 col-lg-4">'
+      echo '<a href="fiche_actor.php?id=' . $db_field2['id_actor'] .'&name= '. $db_field2['name'] .'"><div class="col-12 col-md-6 col-lg-4">'
       ?>
     
               
                 <div class="single-event-area mb-30">
                   <div class="event-thumbnail">
-                    <img src='<?php echo $db_field2['liens_mov']; ?>'/>
+                    <img src='<?php echo $db_field2['liens_act']; ?>'/>
                   </div>
                   <div class="event-text">
                     <h4>
-                      <?php echo $db_field2['title']; ?>
+                      <?php echo $db_field2['name']; ?>
                     </h4>
                     <div class="event-meta-data">
-                      <a href="#" class="event-place">
-                        <?php echo $db_field2['release_date']; ?>
-                      </a>
+                     
                     </div>
                     <a href="#" class="btn see-more-btn">Voir plus
                     </a>
@@ -134,7 +127,7 @@ else if($db_found && (isset($_GET['q'])))
 }
 if($result == 0){
 echo "aucun résultat ne correspond à votre recherche";
-}
+}  
 }
 else 
 {

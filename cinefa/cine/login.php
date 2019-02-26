@@ -174,7 +174,7 @@
             $verif = mysqli_query($db_handle, $verif_query);
             $db_field = mysqli_fetch_assoc($verif);
 
-            return $db_field['id'];
+            return $db_field['ref_user'];
         }
         $mailco = (Econnexion($email_connexion, $db_handle, $db_name, $db_found));
         $mdpco = (Mconnexion($mdp_connexion, $db_handle, $db_name, $db_found));

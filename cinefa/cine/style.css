@@ -58,7 +58,12 @@ ol {
 
 img {
   height: auto;
-  max-width: 100%; }
+  max-width: 100%;
+ }
+ .fiches{
+  max-width: 50% !important;
+  padding-bottom: 10vh !important;
+ }
 
 /* :: 3.1.0 Spacing */
 .mt-15 {
@@ -1518,7 +1523,29 @@ img {
     .has-bg-img .oneMusic-btn:hover, .has-bg-img .oneMusic-btn:focus {
       background-color: #fff;
       color: #000000; }
+      
+      .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+      }
+      .rating > span {
+        display: inline-block;
+        position: relative;
+        width: 1.1em;
+      }
+      .rating > span:hover:before,
+      .rating > span:hover ~ span:before {
+         content: "\2605";
+         position: absolute;
+         color:gold;
+         top:0;
+         left:0;
+      }
 
+      .rating a{
+        text-decoration: none;
+
+      }
 .map-area {
   position: relative;
   z-index: 2; }

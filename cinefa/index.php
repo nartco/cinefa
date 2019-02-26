@@ -41,7 +41,7 @@
                         echo "\n";
                         echo $db_field['release_date'];
                         echo "\n";
-                        echo '<a href="fiche_movie.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'">Dis-moi bonjour !</a>'
+                        echo '<a href="cine/fiche_film.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'">Dis-moi bonjour !</a>'
                         ?>
                         <img src='<?php echo $db_field['liens_mov'];?>'/>
                         <?php

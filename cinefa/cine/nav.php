@@ -1,6 +1,14 @@
 <?php
       if(isset($_GET['kill'])){
-        session_destroy();
+          if($_GET['kill'] == 'oui'){
+            session_destroy();
+            ?>
+            <script>
+                document.location.href="event.php"; 
+            </script>
+            <?php
+          }
+        
         }
 ?>
 
@@ -35,39 +43,10 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="albums-store.html">Albums</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="albums-store.html">Albums</a></li>
-                                        <li><a href="event.html">Events</a></li>
-                                        <li><a href="blog.html">News</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="elements.html">Elements</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="#">Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="event.html">Events</a></li>
-                                <li><a href="blog.html">News</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="event.php">Accueil</a></li>
+                                <li><a href="actors.php">Acteurs</a></li>
+                                <li><a href="directors.php">Realisateurs</a></li>
+
                             </ul>
 
                             <!-- Login/Register & Cart Button -->
@@ -80,7 +59,8 @@
                                             $user_query = 'SELECT * FROM USERS WHERE mail ="'. $_SESSION['email'] .'" ' ;
                                             $user = mysqli_query($db_handle, $user_query);
                                             $db_field = mysqli_fetch_assoc($user);
-                                            echo "<a href='event.php?kill='oui'' id='loginBtn'> ".$db_field['pseudo'] ."</a>";
+                                            $kill = "oui";
+                                            echo "<a href='event.php?kill=". $kill ."' id='loginBtn'> ".$db_field['pseudo'] ."</a>";
                                         }
                                     
                                     else{
@@ -96,9 +76,10 @@
                             ?>
 
                                 <!-- Cart Button -->
-                                <div class="cart-btn">
-                                    <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>
-                                </div>
+                                <form  id="searchthis" method="get">
+            <input id="search" name="q" type="text" placeholder="Rechercher" />
+            <input id="search-btn" type="submit" value="Rechercher" />
+        </form>
                             </div>
                         </div>
                         <!-- Nav End -->
