@@ -1,3 +1,23 @@
+<?php
+    session_start();
+ 
+    require '../connect.php' ;
+    $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
+    $db_name = "cinefa";
+    $db_found = mysqli_select_db($db_handle, $db_name);
+
+mysqli_set_charset($db_handle, "utf8");
+if($db_found){
+  if (isset($_SESSION['email']) && !empty($_SESSION['email'])){
+
+    $user_query = 'SELECT * FROM USERS WHERE mail ="'. $_SESSION['email'] .'" ' ;
+    $user = mysqli_query($db_handle, $user_query);
+    $db_field = mysqli_fetch_assoc($user);
+    
+  }
+}
+  
+  ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,11 +65,6 @@ include 'nav.php';
         <div class="row">
           <!-- Single Event Area -->
           <?php
-require '../connect.php' ;
-$db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) ;
-$db_name = "cinefa";
-$db_found = mysqli_select_db($db_handle, $db_name);
-mysqli_set_charset($db_handle, "utf8");
 if($db_found)
 {
 $sql_query = "SELECT * FROM MOVIES";

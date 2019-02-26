@@ -10,6 +10,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
     <title><?php echo $_GET['name']; ?></title>
 </head>
 <body>
@@ -21,6 +23,12 @@
             $db_name = "cinefa";
             $db_found = mysqli_select_db($db_handle, $db_name);
             mysqli_set_charset($db_handle, "utf8");
+            if(isset($_GET['rating']) && isset($_SESSION['email']) && !empty($_SESSION['email'])){
+                if($db_found){
+                    $query = 'INSERT INTO `MOVIE_NOTES`(`id_movie`, `id_user`, `note`) VALUES ("'. $_GET['id'] . '","'. $_SESSION['id'] .'","'. $_GET['rating'] .'")';
+                    $send = mysqli_query($db_handle, $query);
+                } 
+            }
             if($db_found && isset($_GET['id']))
                 {
                     $sql_query = 'SELECT * FROM MOVIES WHERE id_movie ="'.  $_GET['id'] .'"';
@@ -50,6 +58,17 @@
                         <?php
                         ?>   
                         <img src='<?php echo $db_field['liens_mov'];?>'/>
+                        
+                        <div class="rating"><!--
+                            <?php
+                        echo"<a href="fiche_movie.php?rating='5'&id=' . $db_field['id_movie'] .' ?>'&name='. $db_field['title']; .' title="Donner 5 étoiles">☆</a>"
+                        echo"<a href="fiche_movie.php?rating='4'&id=' . $db_field['id_movie'] .' ?>'&name='. $db_field['title']; .' title="Donner 4 étoiles">☆</a>"
+                        echo"<a href="fiche_movie.php?rating='3'&id=' . $db_field['id_movie'] .' ?>'&name='. $db_field['title']; .' title="Donner 3 étoiles">☆</a>"
+                        echo"<a href="fiche_movie.php?rating='2'&id=' . $db_field['id_movie'] .' ?>'&name='. $db_field['title']; .' title="Donner 2 étoiles">☆</a>"
+                        echo"<a href="fiche_movie.php?rating='1'&id=' . $db_field['id_movie'] .' ?>'&name='. $db_field['title']; .' title="Donner 1 étoile">☆</a>"
+                        ?>
+                        </div>
+                        echo '<a href="fiche_movie.php?id=' . $db_field['id_movie'] .'&name= '. $db_field['title'] .'">Dis-moi bonjour !</a>'
                         <?php
 
                 }

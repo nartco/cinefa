@@ -1,3 +1,9 @@
+<?php
+      if(isset($_GET['kill'])){
+        session_destroy();
+        }
+?>
+
 <link rel="icon" href="img/core-img/favicon.ico">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -68,8 +74,26 @@
                             <div class="login-register-cart-button d-flex align-items-center">
                                 <!-- Login/Register -->
                                 <div class="login-register-btn mr-50">
-                                    <a href="login.php" id="loginBtn">Login / Register</a>
+                                <?php
+                                    if($db_found){
+                                        if (isset($_SESSION['email']) && !empty($_SESSION['email'])){
+                                            $user_query = 'SELECT * FROM USERS WHERE mail ="'. $_SESSION['email'] .'" ' ;
+                                            $user = mysqli_query($db_handle, $user_query);
+                                            $db_field = mysqli_fetch_assoc($user);
+                                            echo "<a href='event.php?kill='oui'' id='loginBtn'> ".$db_field['pseudo'] ."</a>";
+                                        }
+                                    
+                                    else{
+                                        ?>
+                                        <a href="login.php" id="loginBtn">Login / Register</a>
+                                        <?php
+                                    } 
+                                }
+                                    ?>
                                 </div>
+                                <?php
+                            
+                            ?>
 
                                 <!-- Cart Button -->
                                 <div class="cart-btn">
@@ -86,3 +110,4 @@
     </div>
 </header>
 <!-- ##### Header Area End ##### -->
+

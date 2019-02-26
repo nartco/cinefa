@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    require '../connect.php';
+            
+        $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS);
+        $db_name = "cinefa";
+        $db_found = mysqli_select_db($db_handle, $db_name);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,12 +52,10 @@
 
     <!-- ##### Login Area Start ##### -->
     <?php
-    if(isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['adresse']) && isset($_POST['mdp'])){
-        require '../connect.php';
         
-        $db_handle = mysqli_connect(DB_SERVER,DB_USER,DB_PASS);
-        $db_name = "cinefa";
-        $db_found = mysqli_select_db($db_handle, $db_name);
+        
+    if(isset($_POST['pseudo']) && isset($_POST['email']) && isset($_POST['adresse']) && isset($_POST['mdp'])){
+        
 
         $email = $_POST['email'];
         $adresse = $_POST['adresse'];
@@ -56,23 +63,31 @@
         $pseudo = $_POST['pseudo'];
         $tel = $_POST['tel'];
 
-        function verif($pseudo, $mdp, $db_handle, $db_name, $db_found){
+        function verif_mail($email, $db_handle, $db_name, $db_found){
+            $verif_query = "SELECT * FROM USERS";
+            $verif = mysqli_query($db_handle, $verif_query);
+            while($db_field = mysqli_fetch_assoc($verif)){
+                if(($db_field['mail'] == $email)){
+                    return false;
+                }
+        }
+        return true;
+    }
 
-            
+        function verif_pseudo($pseudo, $db_handle, $db_name, $db_found){
             $verif_query = "SELECT * FROM USERS";
             $verif = mysqli_query($db_handle, $verif_query);
             while($db_field = mysqli_fetch_assoc($verif)){
                 if($db_field['pseudo'] == $pseudo){
                     return false;
                 }
-                if(($db_field['mdp'] == $mdp)){
-                    return false;
-                }
             }
             return true;
         }
 
-        if(verif($pseudo, $mdp, $db_handle, $db_name, $db_found) == true){
+        $ducouplepseudo = (verif_pseudo($pseudo, $db_handle, $db_name, $db_found));
+        $ducouplemail = (verif_mail($email, $db_handle, $db_name, $db_found));
+        if($ducouplepseudo == true && $ducouplemail == true){
 
                 if($db_found){
                     $query = 'INSERT INTO `USERS`(`pseudo`, `mail`, `phone`, `address`,`mdp`) VALUES ("'. $pseudo . '","'. $email .'","'. $tel .'", "'. $adresse .'", "'.$mdp .'")';
@@ -95,8 +110,86 @@
             </section>
             <?php
         }
+        
+        else{
+            ?>
+                <section class="login-area section-padding-100">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-8">
+                            <div class="login-content">
+                                <?php
+                                    if($ducouplepseudo == true && $ducouplemail == false){
+                                    ?>
+                                    <h3>Mince !</h3>
+                                    <h4>un compte est déjà associé à ce mail</h4>
+                                    <?php
+                                    }
+                                    else if($ducouplepseudo == false && $ducouplemail == true){
+                                        ?>
+                                        <h3>Mince !</h3>
+                                        <h4>ce pseudo est déjà pris</h4>
+                                        <?php
+                                    }
+                                    else if($ducouplepseudo == false && $ducouplemail == false){
+                                        ?>
+                                        <h3>il semblerait que tu es déjà un compte !</h3>
+                                        <?php
+                                    }
+                                    ?>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <?php
+        }
 
    
+    }
+    else if(isset($_POST['email_connexion']) && isset($_POST['mdp_connexion'])){
+        $email_connexion = $_POST['email_connexion'];
+        $mdp_connexion = $_POST['mdp_connexion'];
+        
+
+        function Econnexion($email, $db_handle, $db_name, $db_found){
+            $verif_query = "SELECT * FROM USERS WHERE mail ='". $email ."';";
+            $verif = mysqli_query($db_handle, $verif_query);
+            if(empty($db_field = mysqli_fetch_assoc($verif))){
+                return false;
+            }
+            return true;
+        }
+        function Mconnexion($mdp, $db_handle, $db_name, $db_found){
+            $verif_query = "SELECT * FROM USERS WHERE mdp = '". $mdp ."';";
+            $verif = mysqli_query($db_handle, $verif_query);
+            if(empty($db_field = mysqli_fetch_assoc($verif))){
+                return false;
+            }
+            return true;
+        }
+        function id_co($email, $db_handle, $db_name, $db_found){
+            $verif_query = "SELECT * FROM USERS WHERE mail ='". $email ."';";
+            $verif = mysqli_query($db_handle, $verif_query);
+            $db_field = mysqli_fetch_assoc($verif);
+
+            return $db_field['id'];
+        }
+        $mailco = (Econnexion($email_connexion, $db_handle, $db_name, $db_found));
+        $mdpco = (Mconnexion($mdp_connexion, $db_handle, $db_name, $db_found));
+        echo $mdpco;
+        if(($mailco == true) && ($mdpco == true)){
+            
+
+            $_SESSION['email'] = $email_connexion;
+            $_SESSION['id'] = id_co($email_connexion, $db_handle, $db_name, $db_found);
+            echo "<script type='text/javascript'>document.location.replace('event.php');</script>";
+        }
+        else if (($mailco == true) || ($mdpco == true)){
+            echo "<script type='text/javascript'>document.location.replace('login.php?error='snake');</script>";
+        }
+            
     }
 
     ?>
@@ -105,17 +198,30 @@
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-8">
                     <div class="login-content">
-                        <h3>Bienvenue</h3>
+                    <?php
+                        if(isset($_POST['error'])){
+                            
+                                ?>
+                                <h3>identifiants inccorects</h3>
+                                <?php
+                            
+                        }
+                        else{
+                            ?>
+                            <h3>Bienvenue</h3>
+                            <?php
+                        }
+                        ?>
                         <!-- Login Form -->
                         <div class="login-form">
-                            <form action="event.php" method="post">
+                            <form action="login.php" method="post">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email </label>
-                                    <input type="email" name="email"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre E-mail">
+                                    <label for="exampleInputPseudo">Email </label>
+                                    <input type="text" name="email_connexion"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrez votre Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mot de passe</label>
-                                    <input type="password" name="mdp" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
+                                    <input type="password" name="mdp_connexion" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
                                 </div>
                                 <button type="submit" class="btn oneMusic-btn mt-30">Se connecter</button>
                             </form>
